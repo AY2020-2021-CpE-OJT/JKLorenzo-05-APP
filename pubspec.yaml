@@ -29,6 +29,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   fluttertoast: ^8.0.7
   http: ^0.13.3
+  random_string: ^2.3.1
+  jaguar_jwt: ^3.0.0
 
 dev_dependencies:
   flutter_test:
