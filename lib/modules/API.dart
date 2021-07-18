@@ -12,10 +12,10 @@ class API {
   static Future<AuthData> register(AuthData data) async {
     final uri = Uri.https(_authority, '/auth/register');
     final headers = <String, String>{
-      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.contentTypeHeader: ContentType.json.toString(),
       HttpHeaders.authorizationHeader: 'Bearer ${data.token}'
     };
-    final request_body = jsonEncode({"id": data.id});
+    final request_body = jsonEncode(data.toJson());
 
     final response = await post(uri, headers: headers, body: request_body);
 
