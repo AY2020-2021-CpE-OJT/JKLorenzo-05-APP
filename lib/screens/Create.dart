@@ -57,17 +57,15 @@ class _CreateState extends State<Create> {
                 Toasts.showMessage(conditions.join('\n'));
               } else {
                 try {
-                  final result = await API.putContact(
-                    PBPartialData(
-                      first_name: fname,
-                      last_name: lname,
-                      phone_numbers: pnums,
-                    ),
-                  );
+                  final newData =
+                      PBPartialData(first_name: fname, last_name: lname);
+                  if (pnums.length > 0) newData.phone_numbers = pnums;
+                  final thisContact = await API.putContact(newData);
+
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => View(
-                        id: result.id,
+                        id: thisContact.id,
                       ),
                     ),
                   );

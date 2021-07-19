@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:phonebook/modules/API.dart';
 import 'package:phonebook/screens/View.dart';
 import 'package:phonebook/structures/PBData.dart';
+import 'package:phonebook/structures/PBPartialData.dart';
 import 'package:phonebook/utils/Functions.dart';
 import 'package:phonebook/utils/Toasts.dart';
 
@@ -79,7 +80,14 @@ class _ManageState extends State<Manage> {
                 Toasts.showMessage(conditions.join('\n'));
               } else {
                 try {
-                  await API.patchContact(PBData(data.id, fname, lname, pnums));
+                  final updateData = PBPartialData();
+                  if (data.first_name != fname) updateData.first_name = fname;
+                  if (data.last_name != lname) updateData.last_name = lname;
+                  if (data.phone_numbers != pnums) {
+                    updateData.phone_numbers = pnums;
+                  }
+                  await API.patchContact(data.id, updateData);
+
                   Navigator.of(context).popUntil(ModalRoute.withName('/'));
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => View(id: data.id)));
