@@ -3,8 +3,12 @@ import 'package:phonebook/modules/API.dart';
 import 'package:phonebook/structures/AuthData.dart';
 import 'package:random_string/random_string.dart';
 
-const JWT_REGISTER =
-    "794b704ce634dd4910966c4b77abc7fa91a64c9cdf520087dd892949b2cb1abf884856914cb4a225256b01a406dd91231c8c91e32345db91afe5b8ddb0045f66";
+const JWT_REGISTER = [
+  "794b704ce634dd4910966c4b77abc7fa",
+  "91a64c9cdf520087dd892949b2cb1abf",
+  "884856914cb4a225256b01a406dd9123",
+  "1c8c91e32345db91afe5b8ddb0045f66"
+];
 final sessionId = randomString(10);
 String accessToken = '';
 
@@ -21,7 +25,7 @@ class Auth {
           payload: {"id": sessionId},
           maxAge: Duration(seconds: 30),
         ),
-        JWT_REGISTER);
+        JWT_REGISTER.join());
 
     final data = await API.register(
       AuthData(id: sessionId, token: requestToken),
