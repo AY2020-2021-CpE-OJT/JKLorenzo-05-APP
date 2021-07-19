@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:phonebook/modules/API.dart';
@@ -5,12 +6,6 @@ import 'package:phonebook/screens/Create.dart';
 import 'package:phonebook/screens/View.dart';
 import 'package:phonebook/structures/PBPartialData.dart';
 import 'package:phonebook/utils/Toasts.dart';
-
-Stream<List<PBPartialData>> contacts() async* {
-  yield* Stream.periodic(Duration(seconds: 3), (_) async {
-    return await API.getContacts();
-  }).asyncMap((event) async => await event);
-}
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -20,15 +15,30 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Future<List<PBPartialData>> _future = API.getContacts();
   bool _isLoading = true;
   bool _isEditting = false;
   List<PBPartialData> _contacts = [];
   List<String> _selected = [];
 
   @override
+  void initState() {
+    super.initState();
+    periodicUpdate();
+  }
+
+  periodicUpdate() {
+    Timer.periodic(Duration(seconds: 30), (timer) {
+      setState(() {
+        _future = API.getContacts();
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: contacts(),
+    return FutureBuilder(
+      future: _future,
       builder: (context, AsyncSnapshot<List<PBPartialData>> snapshot) {
         if (snapshot.hasError) {
           Toasts.showError(snapshot.error.toString());
