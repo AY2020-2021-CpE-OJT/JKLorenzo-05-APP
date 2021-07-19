@@ -71,8 +71,8 @@ class API {
     }
   }
 
-  static Future<void> patchContact(PBData data) async {
-    final uri = Uri.https(_authority, '/api/contact/${data.id}');
+  static Future<void> patchContact(String id, PBPartialData data) async {
+    final uri = Uri.https(_authority, '/api/contact/$id');
     final headers = <String, String>{
       HttpHeaders.contentTypeHeader: ContentType.json.toString(),
       HttpHeaders.authorizationHeader: 'Bearer ${Auth.getAccessToken()}'
@@ -87,7 +87,7 @@ class API {
       case 401:
       case 403:
         await Auth.register();
-        return await patchContact(data);
+        return await patchContact(id, data);
       default:
         throw response.body;
     }
