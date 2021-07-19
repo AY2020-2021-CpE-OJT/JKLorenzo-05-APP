@@ -9,16 +9,16 @@ class PBData {
   PBData(this.id, this.first_name, this.last_name, this.phone_numbers);
 
   factory PBData.fromJson(Map<String, dynamic> json) {
-    final raw_phone_numbers = json['phone_numbers'] as List<dynamic>;
+    final pnums = json['phone_numbers'] as List<dynamic>;
     return PBData(
       json['id'] as String,
       json['first_name'] as String,
       json['last_name'] as String,
-      raw_phone_numbers.map((value) => value.toString()).toList(),
+      pnums.map((value) => value.toString()).toList(),
     );
   }
 
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "id": this.id,
       "first_name": this.first_name,
