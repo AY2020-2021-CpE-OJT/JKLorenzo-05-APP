@@ -106,7 +106,7 @@ class _ManageState extends State<Manage> {
             CircleAvatar(
               backgroundColor: Colors.blueAccent,
               child: Icon(
-                Icons.person,
+                Icons.manage_accounts,
                 color: Colors.white,
                 size: 80,
               ),
