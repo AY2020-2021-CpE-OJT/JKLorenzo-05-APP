@@ -39,7 +39,7 @@ class API {
     final response = await delete(uri, headers: headers);
 
     switch (response.statusCode) {
-      case 200:
+      case 205:
         return;
       case 401:
         await Auth.register();
@@ -80,7 +80,7 @@ class API {
     final response = await patch(uri, headers: headers, body: requestBody);
 
     switch (response.statusCode) {
-      case 200:
+      case 205:
         return;
       case 401:
         await Auth.register();
@@ -101,7 +101,7 @@ class API {
     final response = await put(uri, headers: headers, body: requestBody);
 
     switch (response.statusCode) {
-      case 200:
+      case 201:
         return PBData.fromJson(jsonDecode(response.body));
       case 401:
         await Auth.register();
