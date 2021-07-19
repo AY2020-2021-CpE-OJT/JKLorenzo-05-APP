@@ -74,12 +74,17 @@ class _HomeState extends State<Home> {
                     : [
                         IconButton(
                           icon: Icon(Icons.add),
-                          onPressed: () {
-                            Navigator.of(context).push(
+                          onPressed: () async {
+                            await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => Create(),
                               ),
                             );
+
+                            // Update Contacts
+                            setState(() {
+                              _future = API.getContacts();
+                            });
                           },
                         ),
                         IconButton(
@@ -121,7 +126,7 @@ class _HomeState extends State<Home> {
                                     : Icons.radio_button_unchecked,
                                 color: Colors.lightBlue)
                             : null,
-                        onTap: () {
+                        onTap: () async {
                           if (_isEditting) {
                             setState(() {
                               if (_selected.contains(thisContact.id)) {
@@ -131,13 +136,18 @@ class _HomeState extends State<Home> {
                               }
                             });
                           } else {
-                            Navigator.of(context).push(
+                            await Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => View(
                                   id: thisContact.id!,
                                 ),
                               ),
                             );
+
+                            // Update Contacts
+                            setState(() {
+                              _future = API.getContacts();
+                            });
                           }
                         },
                       );
@@ -185,6 +195,11 @@ class _HomeState extends State<Home> {
                                       _selected
                                           .map((e) => PBPartialData(id: e))
                                           .toList());
+
+                                  // Update Contacts
+                                  setState(() {
+                                    _future = API.getContacts();
+                                  });
 
                                   Toasts.showMessage(
                                       '$result contact${result > 1 ? 's' : ''} deleted');
