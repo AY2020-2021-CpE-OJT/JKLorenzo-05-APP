@@ -89,7 +89,7 @@ class _HomeState extends State<Home> {
                 : ListView.builder(
                     itemCount: _contacts.length,
                     itemBuilder: (context, index) {
-                      final this_data = _contacts[index];
+                      final thisContact = _contacts[index];
                       return ListTile(
                         horizontalTitleGap: 5,
                         leading: Icon(
@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
                           size: 50,
                         ),
                         title: Text(
-                          '${this_data.first_name} ${this_data.last_name}',
+                          '${thisContact.first_name} ${thisContact.last_name}',
                           style: TextStyle(
                               color: Colors.grey[200],
                               fontSize: 18,
@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
                         ),
                         trailing: _isEditting
                             ? Icon(
-                                _selected.contains(this_data.id)
+                                _selected.contains(thisContact.id)
                                     ? Icons.radio_button_checked
                                     : Icons.radio_button_unchecked,
                                 color: Colors.lightBlue)
@@ -114,17 +114,17 @@ class _HomeState extends State<Home> {
                         onTap: () {
                           if (_isEditting) {
                             setState(() {
-                              if (_selected.contains(this_data.id)) {
-                                _selected.remove(this_data.id);
+                              if (_selected.contains(thisContact.id)) {
+                                _selected.remove(thisContact.id);
                               } else {
-                                _selected.add(this_data.id!);
+                                _selected.add(thisContact.id!);
                               }
                             });
                           } else {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => View(
-                                  id: this_data.id!,
+                                  id: thisContact.id!,
                                 ),
                               ),
                             );

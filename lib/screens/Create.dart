@@ -14,11 +14,11 @@ class Create extends StatefulWidget {
 }
 
 class _CreateState extends State<Create> {
-  int PNumTextFields_id = 0;
+  int pnumTextFieldId = 0;
 
-  TextEditingController fname_ctrlr = TextEditingController();
-  TextEditingController lname_ctrlr = TextEditingController();
-  List<PNumTextField> PNumTextFields = [];
+  TextEditingController fnameCtrlr = TextEditingController();
+  TextEditingController lnameCtrlr = TextEditingController();
+  List<PNumTextField> pnumTextFields = [];
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +35,12 @@ class _CreateState extends State<Create> {
               List<String> conditions = [];
 
               // safe format input
-              final fname = Functions.safeFormat(fname_ctrlr.text);
-              final lname = Functions.safeFormat(lname_ctrlr.text);
-              final pnums = PNumTextFields.map((pnumfields) =>
-                  Functions.safeFormat(pnumfields.controller.text)).toList();
+              final fname = Functions.safeFormat(fnameCtrlr.text);
+              final lname = Functions.safeFormat(lnameCtrlr.text);
+              final pnums = pnumTextFields
+                  .map((pnumfields) =>
+                      Functions.safeFormat(pnumfields.controller.text))
+                  .toList();
 
               // Check if all fields are valid
               if (fname.isEmpty) {
@@ -95,7 +97,7 @@ class _CreateState extends State<Create> {
               child: Column(
                 children: [
                   TextField(
-                    controller: fname_ctrlr,
+                    controller: fnameCtrlr,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'First Name',
@@ -105,7 +107,7 @@ class _CreateState extends State<Create> {
                     textCapitalization: TextCapitalization.words,
                   ),
                   TextField(
-                    controller: lname_ctrlr,
+                    controller: lnameCtrlr,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'Last Name',
@@ -115,7 +117,7 @@ class _CreateState extends State<Create> {
                     textCapitalization: TextCapitalization.words,
                   ),
                   SizedBox(height: 20),
-                  ...PNumTextFields,
+                  ...pnumTextFields,
                   SizedBox(height: 20),
                   TextButton(
                     child: Row(
@@ -127,11 +129,11 @@ class _CreateState extends State<Create> {
                     ),
                     onPressed: () {
                       setState(() {
-                        PNumTextFields.add(PNumTextField(
-                          id: PNumTextFields_id++,
+                        pnumTextFields.add(PNumTextField(
+                          id: pnumTextFieldId++,
                           remove: (id) {
                             setState(() {
-                              PNumTextFields.removeWhere((e) => e.id == id);
+                              pnumTextFields.removeWhere((e) => e.id == id);
                             });
                           },
                         ));

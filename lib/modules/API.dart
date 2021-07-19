@@ -15,9 +15,9 @@ class API {
       HttpHeaders.contentTypeHeader: ContentType.json.toString(),
       HttpHeaders.authorizationHeader: 'Bearer ${data.token}'
     };
-    final request_body = jsonEncode(data.toJson());
+    final requestBody = jsonEncode(data.toJson());
 
-    final response = await post(uri, headers: headers, body: request_body);
+    final response = await post(uri, headers: headers, body: requestBody);
 
     switch (response.statusCode) {
       case 200:
@@ -77,9 +77,9 @@ class API {
       HttpHeaders.contentTypeHeader: ContentType.json.toString(),
       HttpHeaders.authorizationHeader: 'Bearer ${Auth.getAccessToken()}'
     };
-    final request_body = jsonEncode(data.toJson());
+    final requestBody = jsonEncode(data.toJson());
 
-    final response = await patch(uri, headers: headers, body: request_body);
+    final response = await patch(uri, headers: headers, body: requestBody);
 
     switch (response.statusCode) {
       case 200:
@@ -99,9 +99,9 @@ class API {
       HttpHeaders.contentTypeHeader: ContentType.json.toString(),
       HttpHeaders.authorizationHeader: 'Bearer ${Auth.getAccessToken()}'
     };
-    final request_body = jsonEncode(data.toJson());
+    final requestBody = jsonEncode(data.toJson());
 
-    final response = await put(uri, headers: headers, body: request_body);
+    final response = await put(uri, headers: headers, body: requestBody);
 
     switch (response.statusCode) {
       case 200:
@@ -123,9 +123,9 @@ class API {
       HttpHeaders.contentTypeHeader: ContentType.json.toString(),
       HttpHeaders.authorizationHeader: 'Bearer ${Auth.getAccessToken()}'
     };
-    final request_body = jsonEncode(data.map((e) => e.toJson()).toList());
+    final requestBody = jsonEncode(data.map((e) => e.toJson()).toList());
 
-    final response = await delete(uri, headers: headers, body: request_body);
+    final response = await delete(uri, headers: headers, body: requestBody);
 
     switch (response.statusCode) {
       case 200:
@@ -150,8 +150,8 @@ class API {
 
     switch (response.statusCode) {
       case 200:
-        final response_body = jsonDecode(response.body) as List<dynamic>;
-        return response_body
+        final responseBody = jsonDecode(response.body) as List<dynamic>;
+        return responseBody
             .map((data) => PBPartialData.fromJson(data))
             .toList();
       case 401:

@@ -6,7 +6,7 @@ import 'package:phonebook/structures/PBData.dart';
 
 class View extends StatelessWidget {
   final String id;
-  const View({Key? key, required String this.id}) : super(key: key);
+  const View({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +107,9 @@ class View extends StatelessWidget {
     );
   }
 
-  List<Widget> renderPNums(List<String> phone_numbers) {
+  List<Widget> renderPNums(List<String> pnums) {
     final List<Widget> widgets = [];
-    if (phone_numbers.length > 0) {
+    if (pnums.length > 0) {
       widgets.addAll([
         SizedBox(height: 30),
         Text(
@@ -123,7 +123,7 @@ class View extends StatelessWidget {
         SizedBox(height: 10),
       ]);
 
-      for (int index = 0; index < phone_numbers.length; index++) {
+      for (int index = 0; index < pnums.length; index++) {
         widgets.addAll([
           Column(
             children: [
@@ -132,7 +132,7 @@ class View extends StatelessWidget {
                   Icon(Icons.call),
                   SizedBox(width: 5),
                   Text(
-                    phone_numbers[index],
+                    pnums[index],
                     style: TextStyle(
                       color: Colors.grey[400],
                       letterSpacing: 2,

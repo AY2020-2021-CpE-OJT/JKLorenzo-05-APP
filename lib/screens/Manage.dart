@@ -8,7 +8,7 @@ import 'package:phonebook/utils/Toasts.dart';
 
 class Manage extends StatefulWidget {
   final PBData data;
-  const Manage({Key? key, required PBData this.data}) : super(key: key);
+  const Manage({Key? key, required this.data}) : super(key: key);
 
   @override
   _ManageState createState() => _ManageState(data);
@@ -17,26 +17,26 @@ class Manage extends StatefulWidget {
 class _ManageState extends State<Manage> {
   bool init = true;
   PBData data;
-  int PNumTextFields_id = 0;
+  int pnumTextFieldId = 0;
 
-  TextEditingController fname_ctrlr = TextEditingController();
-  TextEditingController lname_ctrlr = TextEditingController();
-  List<PNumTextField> PNumTextFields = [];
+  TextEditingController fnameCtrlr = TextEditingController();
+  TextEditingController lnameCtrlr = TextEditingController();
+  List<PNumTextField> pnumTextFields = [];
 
-  _ManageState(PBData this.data);
+  _ManageState(this.data);
 
   @override
   Widget build(BuildContext context) {
     if (init) {
-      fname_ctrlr.text = data.first_name;
-      lname_ctrlr.text = data.last_name;
-      data.phone_numbers.forEach((phone_number) {
-        PNumTextFields.add(PNumTextField(
-          id: PNumTextFields_id++,
-          initial: phone_number,
+      fnameCtrlr.text = data.first_name;
+      lnameCtrlr.text = data.last_name;
+      data.phone_numbers.forEach((number) {
+        pnumTextFields.add(PNumTextField(
+          id: pnumTextFieldId++,
+          initial: number,
           remove: (id) {
             setState(() {
-              PNumTextFields.removeWhere((e) => e.id == id);
+              pnumTextFields.removeWhere((e) => e.id == id);
             });
           },
         ));
@@ -57,10 +57,12 @@ class _ManageState extends State<Manage> {
               List<String> conditions = [];
 
               // safe format input
-              final fname = Functions.safeFormat(fname_ctrlr.text);
-              final lname = Functions.safeFormat(lname_ctrlr.text);
-              final pnums = PNumTextFields.map((pnumfields) =>
-                  Functions.safeFormat(pnumfields.controller.text)).toList();
+              final fname = Functions.safeFormat(fnameCtrlr.text);
+              final lname = Functions.safeFormat(lnameCtrlr.text);
+              final pnums = pnumTextFields
+                  .map((pnumfields) =>
+                      Functions.safeFormat(pnumfields.controller.text))
+                  .toList();
 
               // Check if all fields are valid
               if (fname.isEmpty) {
@@ -107,7 +109,7 @@ class _ManageState extends State<Manage> {
               child: Column(
                 children: [
                   TextField(
-                    controller: fname_ctrlr,
+                    controller: fnameCtrlr,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'First Name',
@@ -117,7 +119,7 @@ class _ManageState extends State<Manage> {
                     textCapitalization: TextCapitalization.words,
                   ),
                   TextField(
-                    controller: lname_ctrlr,
+                    controller: lnameCtrlr,
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.person),
                       hintText: 'Last Name',
@@ -127,7 +129,7 @@ class _ManageState extends State<Manage> {
                     textCapitalization: TextCapitalization.words,
                   ),
                   SizedBox(height: 20),
-                  ...PNumTextFields,
+                  ...pnumTextFields,
                   SizedBox(height: 20),
                   TextButton(
                     child: Row(
@@ -139,11 +141,11 @@ class _ManageState extends State<Manage> {
                     ),
                     onPressed: () {
                       setState(() {
-                        PNumTextFields.add(PNumTextField(
-                          id: PNumTextFields_id++,
+                        pnumTextFields.add(PNumTextField(
+                          id: pnumTextFieldId++,
                           remove: (id) {
                             setState(() {
-                              PNumTextFields.removeWhere((e) => e.id == id);
+                              pnumTextFields.removeWhere((e) => e.id == id);
                             });
                           },
                         ));

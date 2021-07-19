@@ -5,30 +5,30 @@ import 'package:random_string/random_string.dart';
 
 const JWT_REGISTER =
     "794b704ce634dd4910966c4b77abc7fa91a64c9cdf520087dd892949b2cb1abf884856914cb4a225256b01a406dd91231c8c91e32345db91afe5b8ddb0045f66";
-final session_id = randomString(10);
-String access_token = '';
+final sessionId = randomString(10);
+String accessToken = '';
 
 class Auth {
   static String getAccessToken() {
-    return access_token;
+    return accessToken;
   }
 
   static Future<void> register() async {
-    final request_token = issueJwtHS256(
+    final requestToken = issueJwtHS256(
         JwtClaim(
           issuer: "JKLorenzoPBAPP",
           subject: "register",
-          payload: {"id": session_id},
+          payload: {"id": sessionId},
           maxAge: Duration(seconds: 30),
         ),
         JWT_REGISTER);
 
     final data = await API.register(
-      AuthData(id: session_id, token: request_token),
+      AuthData(id: sessionId, token: requestToken),
     );
 
     if (data.token != null) {
-      access_token = data.token!;
+      accessToken = data.token!;
     }
   }
 }
