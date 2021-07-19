@@ -9,22 +9,22 @@ class PBPartialData {
   PBPartialData({this.id, this.first_name, this.last_name, this.phone_numbers});
 
   factory PBPartialData.fromJson(Map<String, dynamic> json) {
-    final raw_phone_numbers = json['phone_numbers'] as List<dynamic>?;
+    final pnums = json['phone_numbers'] as List<dynamic>?;
     return PBPartialData(
-      id: json['id'] as String,
-      first_name: json['first_name'] as String,
-      last_name: json['last_name'] as String,
-      phone_numbers:
-          raw_phone_numbers?.map((value) => value.toString()).toList(),
+      id: json['id'],
+      first_name: json['first_name'],
+      last_name: json['last_name'],
+      phone_numbers: pnums?.map((value) => value.toString()).toList(),
     );
   }
 
-  toJson() {
-    return {
-      "id": this.id,
-      "first_name": this.first_name,
-      "last_name": this.last_name,
-      "phone_numbers": this.phone_numbers
-    };
+  Map<String, dynamic> toJson() {
+    final thisData = <String, dynamic>{};
+    if (this.id != null) thisData['id'] = this.id;
+    if (this.first_name != null) thisData['first_name'] = this.first_name;
+    if (this.last_name != null) thisData['last_name'] = this.last_name;
+    if (this.phone_numbers != null)
+      thisData['phone_numbers'] = this.phone_numbers;
+    return thisData;
   }
 }
