@@ -42,7 +42,6 @@ class API {
       case 200:
         return;
       case 401:
-      case 403:
         await Auth.register();
         return await deleteContact(id);
       default:
@@ -63,7 +62,6 @@ class API {
       case 200:
         return PBData.fromJson(jsonDecode(response.body));
       case 401:
-      case 403:
         await Auth.register();
         return await getContact(id);
       default:
@@ -85,7 +83,6 @@ class API {
       case 200:
         return;
       case 401:
-      case 403:
         await Auth.register();
         return await patchContact(id, data);
       default:
@@ -107,7 +104,6 @@ class API {
       case 200:
         return PBData.fromJson(jsonDecode(response.body));
       case 401:
-      case 403:
         await Auth.register();
         return await putContact(data);
       default:
@@ -131,7 +127,6 @@ class API {
       case 200:
         return int.parse(response.body);
       case 401:
-      case 403:
         await Auth.register();
         return await deleteContacts(data);
       default:
@@ -155,7 +150,6 @@ class API {
             .map((data) => PBPartialData.fromJson(data))
             .toList();
       case 401:
-      case 403:
         await Auth.register();
         return await getContacts();
       default:
