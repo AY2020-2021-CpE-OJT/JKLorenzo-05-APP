@@ -18,7 +18,8 @@ class Auth {
   }
 
   static Future<void> register() async {
-    final requestToken = issueJwtHS256(
+    // generate register token
+    final registerToken = issueJwtHS256(
         JwtClaim(
           issuer: "JKLorenzoPBAPP",
           subject: "register",
@@ -27,12 +28,25 @@ class Auth {
         ),
         JWT_REGISTER.join());
 
+    // register
     final data = await API.register(
-      AuthData(id: sessionId, token: requestToken),
+      AuthData(id: sessionId, token: registerToken),
     );
 
-    if (data.token != null) {
-      accessToken = data.token!;
-    }
+    // check if token is for this session
+    if (data.id != sessionId) throw 'SESSION_MISMATCH';
+
+    // decode access token
+    final token = verifyJwtHS256Signature(data.token!, JWT_REGISTER.join());
+
+    // check if token has valid headers
+    if (token.issuer != 'JKLorenzoPBAPI') throw 'INVALID_HEADER';
+    if (token.subject != 'registered') throw 'INVALID_HEADER';
+
+    // check if payload is for this session
+    if (token.payload['id'] != sessionId) throw 'SESSION_MISMATCH';
+
+    // get access token
+    accessToken = token.payload['token'];
   }
 }
