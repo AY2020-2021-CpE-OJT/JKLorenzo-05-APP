@@ -189,7 +189,7 @@ class _HomeState extends State<Home> {
                                   _contacts.removeWhere(
                                       (e) => _selected.contains(e.id));
                                 });
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                                 try {
                                   final result = await API.deleteContacts(
                                       _selected
@@ -216,7 +216,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                               },
                             ),
                           ],
