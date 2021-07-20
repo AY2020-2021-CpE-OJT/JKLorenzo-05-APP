@@ -201,8 +201,7 @@ class _HomeState extends State<Home> {
                                     _future = API.getContacts();
                                   });
 
-                                  Toasts.showMessage(
-                                      '$result contact${result > 1 ? 's' : ''} deleted');
+                                  Toasts.showMessage(result);
                                 } catch (error) {
                                   Toasts.showMessage(error.toString());
                                 }
