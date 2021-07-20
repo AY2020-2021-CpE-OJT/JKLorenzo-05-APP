@@ -113,7 +113,7 @@ class API {
 
   // ===========================================================================
 
-  static Future<int> deleteContacts(List<PBPartialData> data) async {
+  static Future<String> deleteContacts(List<PBPartialData> data) async {
     final uri = Uri.https(_authority, '/api/contacts');
     final headers = <String, String>{
       HttpHeaders.contentTypeHeader: ContentType.json.toString(),
@@ -125,7 +125,7 @@ class API {
 
     switch (response.statusCode) {
       case 200:
-        return int.parse(response.body);
+        return response.body;
       case 401:
         await Auth.register();
         return await deleteContacts(data);
